@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url:
+    username:
+    password:
+
+mybatis-plus:
+  mapper-locations: classpath:com/zero/logisticsbackend/mapper/**/*.xml
