@@ -20,6 +20,10 @@ create table province_info
     comment '省信息表'
     row_format = dynamic;
 
+insert into province_info(`name`, `longitude`, `latitude`)
+values ('安徽省', 117.330139, 31.734559),
+       ('河南省', 113.753094, 34.767052);
+
 drop table if exists city_info;
 create table city_info
 (
@@ -235,3 +239,49 @@ create table car_driver
     collate utf8mb4_0900_ai_ci
     comment '订单货运类型关系表'
     row_format = dynamic;
+
+drop table if exists country_log_info;
+create table country_log_info
+(
+    `id`                      int    not null auto_increment comment '编号',
+    `year`                    int    not null comment '年份',
+    `log_volume`              double not null comment '物流量',
+    `ind_scale`               double not null comment '行业规模',
+    `l_tran_volume`           double not null comment '陆运总量',
+    `w_tran_volume`           double not null comment '水运总量',
+    `a_tran_volume`           double not null comment '空运总量',
+    `log_income`              double not null comment '物流收入',
+    `ind_activity`            double not null comment '行业活跃度',
+    `local_op_volume`         double not null comment '同城快递量',
+    `remote_op_volume`        double not null comment '异地快递量',
+    `international_op_volume` double not null comment '国际快递量',
+    `e_log_volume`            double not null comment '东部物流量',
+    `m_log_volume`            double not null comment '中部物流量',
+    `w_log_volume`            double not null comment '西部物流量',
+    `e_log_income`            double not null comment '东部物流收入',
+    `m_log_income`            double not null comment '中部物流收入',
+    `w_log_income`            double not null comment '西部物流收入',
+    primary key (`id`),
+    unique key (`year`)
+)
+    engine = InnoDB
+    character set utf8mb4
+    collate utf8mb4_0900_ai_ci
+    comment '国家流信息表'
+    row_format = dynamic;
+
+insert into country_log_info(`year`, `log_volume`, `ind_scale`,
+                             `l_tran_volume`, `w_tran_volume`, `a_tran_volume`,
+                             `log_income`, `ind_activity`, `local_op_volume`,
+                             `remote_op_volume`, `international_op_volume`, `e_log_volume`,
+                             `m_log_volume`, `w_log_volume`, `e_log_income`,
+                             `m_log_income`, `w_log_income`)
+values (2013, 918674.89, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+       (2014, 1395925.30, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+       (2015, 2066636.84, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+       (2016, 3128315.11, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+       (2017, 4005591.91, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+       (2018, 5071042.80, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+       (2019, 6352290.97, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+       (2020, 8335789.43, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
+       (2021, 10829641.32, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
