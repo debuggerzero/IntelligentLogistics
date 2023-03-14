@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zero.logisticsbackend.repo.mapper.ProvinceLogisticsInfoMapper">
+
+    <resultMap id="provinceLogisticsInfo" type="com.zero.logisticsbackend.model.po.ProvinceLogisticsInfo">
+        <result property="id" column="id" />
+        <result property="year" column="year" />
+        <result property="logVolume" column="log_volume" />
+        <result property="indScale" column="ind_scale" />
+        <result property="lTranVolume" column="l_tran_volume" />
+        <result property="wTranVolume" column="w_tran_volume" />
+        <result property="aTranVolume" column="a_tran_volume" />
+        <result property="logIncome" column="log_income" />
+        <result property="sfStoVolume" column="sf_sto_volume" />
+        <result property="djStoVolume" column="dj_sto_volume" />
+        <result property="emsStoVolume" column="ems_sto_volume" />
+        <result property="otherStoVolume" column="other_sto_volume" />
+        <collection property="industryCycle" ofType="com.zero.logisticsbackend.model.po.IndustryCycleInfo" >
+            <result property="month" column="month" />
+            <result property="indCycle" column="ind_cycle" />
+        </collection>
+    </resultMap>
+
+    <select id="getProvinceLogisticsInfo"
+            resultMap="provinceLogisticsInfo">
+        select
+            province_log_info.id, year, log_volume, ind_scale, l_tran_volume, w_tran_volume,
+            a_tran_volume, log_income, sf_sto_volume, dj_sto_volume, ems_sto_volume, other_sto_volume,
+            month, ind_cycle
+        from
+            province_log_info, industry_cycle
+        where
+            pro_id = #{proId} and province_log_info.ind_cycle_id = industry_cycle.ind_cycle_id
+    </select>
+
+</mapper>

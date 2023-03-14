@@ -10,9 +10,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -33,13 +31,14 @@ public class CountryLogisticsInfoService {
         return countryLogisticsInfoRepo.getCountryLogisticsInfoList();
     }
 
-    @Cacheable("logisticsVolumeInfoList")
+    @Cacheable("countryLogisticsVolumeInfoList")
     public List<LogisticsVolumeInfoVO> getLogisticsVolumeInfoVOList() {
 
         Collection<CountryLogisticsInfo> countryLogisticsInfoList = getCountryLogisticsInfoList();
         List<LogisticsVolumeInfoVO> logisticsVolumeInfoVOList = countryLogisticsInfoList
                 .stream()
                 .map(ToLogisticsVolumeInfoVO.CONVERT::toLogisticsVolumeInfo)
+                .sorted(Comparator.comparing(LogisticsVolumeInfoVO::getYear))
                 .collect(Collectors.toList());
 
         int len = logisticsVolumeInfoVOList.size();
@@ -53,13 +52,14 @@ public class CountryLogisticsInfoService {
         return logisticsVolumeInfoVOList;
     }
 
-    @Cacheable("logisticsIncomeInfoVOList")
+    @Cacheable("countryLogisticsIncomeInfoVOList")
     public List<LogisticsIncomeInfoVO> getLogisticsIncomeInfoVOList() {
 
         List<CountryLogisticsInfo> countryLogisticsInfoList = getCountryLogisticsInfoList();
         List<LogisticsIncomeInfoVO> logisticsIncomeInfoVOList = countryLogisticsInfoList
                 .stream()
                 .map(ToLogisticsIncomeInfoVO.CONVERT::toLogisticsIncomeInfo)
+                .sorted(Comparator.comparing(LogisticsIncomeInfoVO::getYear))
                 .collect(Collectors.toList());
 
         int len = logisticsIncomeInfoVOList.size();
@@ -73,7 +73,7 @@ public class CountryLogisticsInfoService {
         return logisticsIncomeInfoVOList;
     }
 
-    @Cacheable("transportVolumeInfoVO")
+    @Cacheable("countryTransportVolumeInfoVO")
     public TransportVolumeInfoVO getTransportVolumeInfoVO(Integer year) {
 
         List<CountryLogisticsInfo> countryLogisticsInfoList = getCountryLogisticsInfoList();
@@ -82,14 +82,14 @@ public class CountryLogisticsInfoService {
                 .map(ToTransportVolumeInfoVO.CONVERT::toTransportVolumeInfoVO)
                 .collect(Collectors.toMap(TransportVolumeInfoVO::getYear, e -> e));
 
-        if (transportVolumeInfoMap.get(year) == null) {
+        if (Objects.isNull(transportVolumeInfoMap.get(year))) {
             throw new AssertionException(500001, "该年数据不存在...");
         }
 
         return transportVolumeInfoMap.get(year);
     }
 
-    @Cacheable("operationVolumeInfoVOList")
+    @Cacheable("countryOperationVolumeInfoVOList")
     public List<OperationVolumeInfoVO> getOperationVolumeInfoVOList(Integer beginYear, Integer endYear) {
         if (beginYear > endYear) {
             throw new AssertionException(500001, "参数错误...");
@@ -101,10 +101,11 @@ public class CountryLogisticsInfoService {
                 .filter(countryLogisticsInfo ->
                         countryLogisticsInfo.getYear() >= beginYear && countryLogisticsInfo.getYear() <= endYear)
                 .map(ToOperationVolumeInfoVO.CONVERT::toOperationVolumeInfoVO)
+                .sorted(Comparator.comparing(OperationVolumeInfoVO::getYear))
                 .collect(Collectors.toList());
     }
 
-    @Cacheable("subareaLogisticsInfoVO")
+    @Cacheable("countrySubareaLogisticsInfoVO")
     public SubareaLogisticsInfoVO getSubareaLogisticsInfoVO(Integer year) {
 
         List<CountryLogisticsInfo> countryLogisticsInfoList = getCountryLogisticsInfoList();
@@ -113,20 +114,21 @@ public class CountryLogisticsInfoService {
                 .map(ToSubareaLogisticsInfoVO.CONVERT::toSubareaLogisticsInfoVO)
                 .collect(Collectors.toMap(SubareaLogisticsInfoVO::getYear, e -> e));
 
-        if (subareaLogisticsInfoMap.get(year) == null) {
+        if (Objects.isNull(subareaLogisticsInfoMap.get(year))) {
             throw new AssertionException(500001, "该年数据不存在...");
         }
 
         return subareaLogisticsInfoMap.get(year);
     }
 
-    @Cacheable("industryScaleInfoVOList")
+    @Cacheable("countryIndustryScaleInfoVOList")
     public IndustryScaleInfoVO getIndustryScaleInfoVO(Integer year) {
 
         List<CountryLogisticsInfo> countryLogisticsInfoList = getCountryLogisticsInfoList();
         List<IndustryScaleInfoVO> industryScaleInfoVOList = countryLogisticsInfoList
                 .stream()
                 .map(ToIndustryScaleInfoVO.CONVERT::toIndustryScaleInfoVO)
+                .sorted(Comparator.comparing(IndustryScaleInfoVO::getYear))
                 .collect(Collectors.toList());
 
         int len = industryScaleInfoVOList.size();
@@ -140,7 +142,7 @@ public class CountryLogisticsInfoService {
         Map<Integer, IndustryScaleInfoVO> integerIndustryScaleInfoMap = industryScaleInfoVOList
                 .stream().collect(Collectors.toMap(IndustryScaleInfoVO::getYear, e -> e));
 
-        if (integerIndustryScaleInfoMap.get(year) == null) {
+        if (Objects.isNull(integerIndustryScaleInfoMap.get(year))) {
             throw new AssertionException(500001, "该年数据不存在...");
         }
 
