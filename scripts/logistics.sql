@@ -245,29 +245,29 @@ create table country_log_info
 (
     `id`                      int    not null auto_increment comment '编号',
     `year`                    int    not null comment '年份',
-    `log_volume`              double not null comment '物流量',
-    `ind_scale`               double not null comment '行业规模',
-    `l_tran_volume`           double not null comment '陆运总量',
-    `w_tran_volume`           double not null comment '水运总量',
-    `a_tran_volume`           double not null comment '空运总量',
-    `log_income`              double not null comment '物流收入',
-    `ind_activity`            double not null comment '行业活跃度',
-    `local_op_volume`         double not null comment '同城快递量',
-    `remote_op_volume`        double not null comment '异地快递量',
-    `international_op_volume` double not null comment '国际快递量',
-    `e_log_volume`            double not null comment '东部物流量',
-    `m_log_volume`            double not null comment '中部物流量',
-    `w_log_volume`            double not null comment '西部物流量',
-    `e_log_income`            double not null comment '东部物流收入',
-    `m_log_income`            double not null comment '中部物流收入',
-    `w_log_income`            double not null comment '西部物流收入',
+    `log_volume`              double not null default 0.0 comment '物流量',
+    `log_income`              double not null default 0.0 comment '物流收入',
+    `ind_scale`               double not null default 0.0 comment '行业规模',
+    `ind_activity`            double not null default 0.0 comment '行业活跃度',
+    `l_tran_volume`           double not null default 0.0 comment '陆运总量',
+    `w_tran_volume`           double not null default 0.0 comment '水运总量',
+    `a_tran_volume`           double not null default 0.0 comment '空运总量',
+    `local_op_volume`         double not null default 0.0 comment '同城快递量',
+    `remote_op_volume`        double not null default 0.0 comment '异地快递量',
+    `international_op_volume` double not null default 0.0 comment '国际快递量',
+    `e_log_volume`            double not null default 0.0 comment '东部物流量',
+    `m_log_volume`            double not null default 0.0 comment '中部物流量',
+    `w_log_volume`            double not null default 0.0 comment '西部物流量',
+    `e_log_income`            double not null default 0.0 comment '东部物流收入',
+    `m_log_income`            double not null default 0.0 comment '中部物流收入',
+    `w_log_income`            double not null default 0.0 comment '西部物流收入',
     primary key (`id`),
     unique key (`year`)
 )
     engine = InnoDB
     character set utf8mb4
     collate utf8mb4_0900_ai_ci
-    comment '国家流信息表'
+    comment '国家物流信息表'
     row_format = dynamic;
 
 insert into country_log_info(`year`, `log_volume`, `ind_scale`,
@@ -276,12 +276,84 @@ insert into country_log_info(`year`, `log_volume`, `ind_scale`,
                              `remote_op_volume`, `international_op_volume`, `e_log_volume`,
                              `m_log_volume`, `w_log_volume`, `e_log_income`,
                              `m_log_income`, `w_log_income`)
-values (2013, 918674.89, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-       (2014, 1395925.30, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-       (2015, 2066636.84, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-       (2016, 3128315.11, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-       (2017, 4005591.91, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-       (2018, 5071042.80, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-       (2019, 6352290.97, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-       (2020, 8335789.43, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0),
-       (2021, 10829641.32, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+values (2013, 918674.89, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013, 2013),
+       (2014, 1395925.30, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014, 2014),
+       (2015, 2066636.84, 2015, 2015, 2015, 2015, 2015, 2015, 2015, 2015, 2015, 2015, 2015, 2015, 2015, 2015, 2015),
+       (2016, 3128315.11, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016),
+       (2017, 4005591.91, 2017, 2017, 2017, 2017, 2017, 2017, 2017, 2017, 2017, 2017, 2017, 2017, 2017, 2017, 2017),
+       (2018, 5071042.80, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018, 2018),
+       (2019, 6352290.97, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019),
+       (2020, 8335789.43, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020),
+       (2021, 10829641.32, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2021, 2021);
+
+drop table if exists industry_cycle;
+create table industry_cycle
+(
+    `id`           int    not null auto_increment comment '编号',
+    `ind_cycle_id` int    not null comment '行业景气编号',
+    `month`        int    not null comment '月份',
+    `ind_cycle`    double not null default 0.0 comment '行业景气',
+    primary key (`id`)
+)
+    engine = InnoDB
+    character set utf8mb4
+    collate utf8mb4_0900_ai_ci
+    comment '行业景气信息表'
+    row_format = dynamic;
+
+insert into industry_cycle(`ind_cycle_id`, `month`, `ind_cycle`)
+values (1000, 1, 2023),
+       (1000, 2, 2023),
+       (1000, 3, 2023),
+       (1000, 4, 2023),
+       (1000, 5, 2023),
+       (1000, 6, 2023),
+       (1000, 7, 2023),
+       (1000, 8, 2023),
+       (1000, 9, 2023),
+       (1000, 10, 2023),
+       (1000, 11, 2023),
+       (1000, 12, 2023);
+
+drop table if exists province_log_info;
+create table province_log_info
+(
+    `id`               int    not null auto_increment comment '编号',
+    `year`             int    not null comment '年份',
+    `pro_id`           int    not null default 0.0 comment '省编号',
+    `log_volume`       double not null default 0.0 comment '物流量',
+    `ind_scale`        double not null default 0.0 comment '行业规模',
+    `l_tran_volume`    double not null default 0.0 comment '陆运总量',
+    `w_tran_volume`    double not null default 0.0 comment '水运总量',
+    `a_tran_volume`    double not null default 0.0 comment '空运总量',
+    `log_income`       double not null default 0.0 comment '物流收入',
+    `ind_cycle_id`     int    not null comment '行业景气',
+    `sf_sto_volume`    double not null default 0.0 comment '顺丰入库量',
+    `dj_sto_volume`    double not null default 0.0 comment '京东入库量',
+    `ems_sto_volume`   double not null default 0.0 comment 'EMS入库量',
+    `other_sto_volume` double not null default 0.0 comment '其他入库量',
+
+    primary key (`id`),
+    unique key (`year`),
+    foreign key (`pro_id`) references province_info (`id`)
+)
+    engine = InnoDB
+    character set utf8mb4
+    collate utf8mb4_0900_ai_ci
+    comment '省物流信息表'
+    row_format = dynamic;
+
+insert into province_log_info(`year`, `pro_id`, `log_volume`,
+                              `ind_scale`, `l_tran_volume`, `w_tran_volume`,
+                              `a_tran_volume`, `log_income`, `ind_cycle_id`, `sf_sto_volume`, `dj_sto_volume`,
+                              `ems_sto_volume`, `other_sto_volume`)
+values (2013, 1000, 2013, 2013, 2013, 2013, 2013, 2013, 1000, 2013, 2013, 2013, 2013),
+       (2014, 1000, 2014, 2014, 2014, 2014, 2014, 2014, 1000, 2014, 2014, 2014, 2014),
+       (2015, 1000, 2015, 2015, 2015, 2015, 2015, 2015, 1000, 2015, 2015, 2015, 2015),
+       (2016, 1000, 2016, 2016, 2016, 2016, 2016, 2016, 1000, 2016, 2016, 2016, 2016),
+       (2017, 1000, 2017, 2017, 2017, 2017, 2017, 2017, 1000, 2017, 2017, 2017, 2017),
+       (2018, 1000, 2018, 2018, 2018, 2018, 2018, 2018, 1000, 2018, 2018, 2018, 2018),
+       (2019, 1000, 2019, 2019, 2019, 2019, 2019, 2019, 1000, 2019, 2019, 2019, 2019),
+       (2020, 1000, 2020, 2020, 2020, 2020, 2020, 2020, 1000, 2020, 2020, 2020, 2020),
+       (2021, 1000, 2021, 2021, 2021, 2021, 2021, 2021, 1000, 2021, 2021, 2021, 2021),
+       (2022, 1000, 2022, 2022, 2022, 2022, 2022, 2022, 1000, 2022, 2022, 2022, 2022);
